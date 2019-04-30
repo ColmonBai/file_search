@@ -63,16 +63,16 @@ def countByDir(mydirs,keyWords):
     for dir in mydirs:
         for root, dirs, files in os.walk(dir):
             for file in files:
-                abs_file = os.path.join(root, file)
-                ws.write(yAxis, 0, file)
-                ws.write(yAxis, 1, abs_file)
-
-                resultDict = countByDocName(abs_file,keyWords)
-                xAxis = 2
-                for sum in resultDict.values():
-                    ws.write(yAxis, xAxis, sum)
-                    xAxis += 1
-                yAxis += 1
+                if (re.search(".pdf|.docx$", file)):
+                    abs_file = os.path.join(root, file)
+                    ws.write(yAxis, 0, file)
+                    ws.write(yAxis, 1, abs_file)
+                    resultDict = countByDocName(abs_file,keyWords)
+                    xAxis = 2
+                    for sum in resultDict.values():
+                        ws.write(yAxis, xAxis, sum)
+                        xAxis += 1
+                    yAxis += 1
 
     wb.save('统计结果.xls')
 
